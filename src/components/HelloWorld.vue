@@ -31,17 +31,20 @@
 
     <v-layout row>
          <v-flex>
-             <section class="controls" v-if="!gameIsRunning">
+            <section class="controls"  v-if="gameOver">
                 <div class="small-12 columns">
-                    <button id="start-game" @click="startGame">START NEW GAME</button>
+                 <button id="start-game" @click="newGame()">START NEW GAME</button>
                 </div>
             </section>
+
             <section class="controls" v-else>
-                <div class="small-12 columns">
-                    <button id="attack" @click="attack">ATTACK</button>
-                    <button id="special-attack" @click="specialAttack">SPECIAL ATTACK</button>
-                    <button id="heal" @click="heal">HEAL</button>
-                    <button id="give-up" @click="giveUp">GIVE UP</button>
+                <div class="small-12 columns" v-if="!gameOver">
+                     <button id="attack"
+                        @click="damageDone()"
+                    >ATTACK</button>
+                    <button id="special-attack" @click="damageDone()">SPECIAL ATTACK</button>
+                    <button id="heal" @click="damageDone()">HEAL</button>
+                    <button id="give-up" @click="gameOver = true">GIVE UP</button>
                 </div>
             </section>
         </v-flex>
@@ -49,13 +52,19 @@
 
     <v-layout row>
         <v-flex>
-            <section class="log" v-if="turns.length > 0">
+            <section class="row log" v-if="hits.length > 0">
                 <div class="small-12 columns">
                     <ul>
-                        <li v-for="(turn,key) in turns"
-                            :key="key"
-                            :class="{'player-turn': turn.isPlayer, 'monster-turn': !turn.isPlayer}">
-                            {{ turn.text }}
+                        <li 
+                        v-for="(hit, key) in hits" 
+                        :key="key"
+                        >
+                            <div v-if="key %2 == 0" class="monster-turn">
+                            Monster hits Player for {{ hit }}
+                            </div>
+                            <div v-else class="player-turn">
+                                Player hits Monster for {{ hit }}
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -79,87 +88,54 @@ export default {
     data: () => ({
         playerHealth: 100,
         monsterHealth: 100,
-        gameIsRunning: false,
-        turns: []
+        specialAttack: false,
+        gameOver: true,
+        hits: [],
+        logMessage: ''
     }),
-    methods: {
-        startGame: function () {
-                this.gameIsRunning = true;
-                this.playerHealth = 100;
-                this.monsterHealth = 100;
-                this.turns = [];
-            },
-            attack: function () {
-                var damage = this.calculateDamage(3, 10);
-                this.monsterHealth -= damage;
-                this.turns.unshift({
-                    isPlayer: true,
-                    text: 'Player hits Monster for ' + damage
-                });
-                if (this.checkWin()) {
-                    return;
-                }
+     methods: {
+        newGame: function() {
+        
+            this.playerHealth  = 100;
+            this.monsterHealth = 100;
+            this.gameOver = false;
+            this.hits = [];
+        
+        },
+        damageDone: function() {
+            var vm = this;
 
-                this.monsterAttacks();
-            },
-            specialAttack: function () {
-                var damage = this.calculateDamage(10, 20);
-                this.monsterHealth -= damage;
-                this.turns.unshift({
-                    isPlayer: true,
-                    text: 'Player hits Monster hard for ' + damage
-                });
-                if (this.checkWin()) {
-                    return;
-                }
-                this.monsterAttacks();
-            },
-            heal: function () {
-                if (this.playerHealth <= 90) {
-                    this.playerHealth += 10;
-                } else {
-                    this.playerHealth = 100;
-                }
-                this.turns.unshift({
-                    isPlayer: true,
-                    text: 'Player heals for 10'
-                });
-                this.monsterAttacks();
-            },
-            giveUp: function () {
-                this.gameIsRunning = false;
-            },
-            monsterAttacks: function() {
-                var damage = this.calculateDamage(5, 12);
-                this.playerHealth -= damage;
-                this.checkWin();
-                this.turns.unshift({
-                    isPlayer: false,
-                    text: 'Monster hits Player for ' + damage
-                });
-            },
-            calculateDamage: function(min, max) {
-                return Math.max(Math.floor(Math.random() * max) + 1, min);
-            },
-            checkWin: function() {
-                if (this.monsterHealth <= 0) {
-                    if (confirm('You won! New Game?')) {
-                        this.modal = true;
-                        this.startGame();
-                    } else {
-                        this.gameIsRunning = false;
-                    }
-                    return true;
-                } else if (this.playerHealth <= 0) {
-                    if (confirm('You lost! New Game?')) {
-                        this.startGame();
-                    } else {
-                        this.gameIsRunning = false;
-                    }
-                    return true;
-                }
-                return false;
+            let monsterDamage = Math.floor(Math.random() * 10);
+            let playerDamage = Math.floor(Math.random() * 10);
+           
+            if(event.target == document.getElementById('special-attack')) {
+                monsterDamage += Math.floor(Math.random() * 10);
             }
+
+            if(event.target == document.getElementById('heal')) {
+
+                monsterDamage = 0;
+
+                if(vm.playerHealth >= 90) {
+                    vm.playerHealth = 100;
+                } else { vm.playerHealth += Math.floor(Math.random() * 10); }
+                
+            }
+
+                vm.monsterHealth -= monsterDamage;
+                vm.playerHealth -= playerDamage;
+
+            if(vm.monsterHealth <= 0) {
+                vm.gameOver = true;
+            }
+
+            if(vm.playerHealth <= 0) {
+                vm.gameOver = true;
+            }
+            
+            vm.hits.unshift(monsterDamage);
+            vm.hits.unshift(playerDamage);
+        },
     }
 };
 </script>
