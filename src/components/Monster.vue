@@ -51,8 +51,8 @@
     </v-layout>
 
     <v-layout row>
-        <v-flex>
-            <section class="row log" v-if="hits.length > 0">
+        <v-flex sm12>
+            <section class="log" v-if="hits.length > 0">
                 <div class="small-12 columns">
                     <ul>
                         <li 
