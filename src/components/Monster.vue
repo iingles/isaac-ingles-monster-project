@@ -1,4 +1,4 @@
-<template class='hello'>
+<template class='monsterGame'>
   <v-container>
     <v-layout row>
         <v-flex xs12 md6>
@@ -42,9 +42,9 @@
                      <button id="attack"
                         @click="damageDone()"
                     >ATTACK</button>
-                    <button id="special-attack" @click="damageDone()">SPECIAL ATTACK</button>
-                    <button id="heal" @click="damageDone()">HEAL</button>
-                    <button id="give-up" @click="gameOver = true">GIVE UP</button>
+                    <button id="special-attack" @click="specialAttack = true, damageDone()">SPECIAL ATTACK</button>
+                    <button id="heal" @click="heal=true">HEAL</button>
+                    <button id="give-up" @click="showDialog=true">GIVE UP</button>
                 </div>
             </section>
         </v-flex>
@@ -60,10 +60,10 @@
                         :key="key"
                         >
                             <div v-if="key %2 == 0" class="monster-turn">
-                            Monster hits Player for {{ hit }}
+                                Monster hits Player for {{ hit }}
                             </div>
                             <div v-else class="player-turn">
-                                Player hits Monster for {{ hit }}
+                                Player hits Monster for {{ hit }}                            
                             </div>
                         </li>
                     </ul>
@@ -89,11 +89,33 @@ export default {
         playerHealth: 100,
         monsterHealth: 100,
         specialAttack: false,
+        heal: false,
         gameOver: true,
         hits: [],
-        logMessage: ''
+        logMessage: '',
+        modalMessage: '',
+        showDialog: false
     }),
-     methods: {
+    // computed: {
+    //     showModal: function() {
+
+    //     }
+    // },
+    watch: {
+        // gameOver: function() {
+        //     var vm = this;
+        // },
+        heal: function() {
+            var vm = this;
+            if(vm.heal == true) {
+                if(vm.playerHealth >= 90) {
+                    vm.playerHealth = 100;                    
+                } else { vm.playerHealth += 10 }
+           }
+           vm.heal="false";
+        }
+    },
+    methods: {
         newGame: function() {
         
             this.playerHealth  = 100;
@@ -107,29 +129,22 @@ export default {
 
             let monsterDamage = Math.floor(Math.random() * 10);
             let playerDamage = Math.floor(Math.random() * 10);
-           
-            if(event.target == document.getElementById('special-attack')) {
-                monsterDamage += Math.floor(Math.random() * 10);
+
+            if(vm.specialAttack == true) {
+                monsterDamage += Math.floor(Math.random() * 12); 
+                vm.specialAttack = false;
             }
 
-            if(event.target == document.getElementById('heal')) {
-
-                monsterDamage = 0;
-
-                if(vm.playerHealth >= 90) {
-                    vm.playerHealth = 100;
-                } else { vm.playerHealth += Math.floor(Math.random() * 10); }
-                
-            }
-
-                vm.monsterHealth -= monsterDamage;
-                vm.playerHealth -= playerDamage;
+            vm.monsterHealth -= monsterDamage;
+            vm.playerHealth -= playerDamage;
 
             if(vm.monsterHealth <= 0) {
+                vm.monsterHealth = 0;
                 vm.gameOver = true;
             }
 
             if(vm.playerHealth <= 0) {
+                vm.playerHealth = 0;
                 vm.gameOver = true;
             }
             

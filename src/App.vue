@@ -1,18 +1,18 @@
 <template>
   <v-app>
     <v-content>
-      <HelloWorld hello/>
+      <Monster monsterGame/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Monster from './components/Monster';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Monster,
   },
   data: () => ({
     
