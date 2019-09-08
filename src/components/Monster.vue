@@ -44,7 +44,7 @@
                     >ATTACK</button>
                     <button id="special-attack" @click="specialAttack = true, damageDone()">SPECIAL ATTACK</button>
                     <button id="heal" @click="heal=true">HEAL</button>
-                    <button id="give-up" @click="showDialog=true">GIVE UP</button>
+                    <button id="give-up" @click="newGame()">GIVE UP</button>
                 </div>
             </section>
         </v-flex>
@@ -95,16 +95,8 @@ export default {
         logMessage: '',
         modalMessage: '',
         showDialog: false
-    }),
-    // computed: {
-    //     showModal: function() {
-
-    //     }
-    // },
+    }),    
     watch: {
-        // gameOver: function() {
-        //     var vm = this;
-        // },
         heal: function() {
             var vm = this;
             if(vm.heal == true) {
