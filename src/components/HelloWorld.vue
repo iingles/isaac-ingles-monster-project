@@ -1,58 +1,262 @@
-<template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+<template class='hello'>
+  <v-container>
+    <v-layout row>
+        <v-flex xs12 md6>
+            <div class="small-6 columns">
+                <h1 class="text-center">YOU</h1>
+                <div class="healthbar">
+                    <div
+                            class="healthbar text-center"
+                            style="background-color: green; margin: 0; color: white;"
+                            :style="{width: playerHealth + '%'}">
+                        {{ playerHealth }}
+                    </div>
+                </div>
+            </div>
+        </v-flex>
+        <v-flex xs12 md6>
+            <div class="small-6 columns">
+                <h1 class="text-center">MONSTER</h1>
+                <div class="healthbar">
+                    <div
+                            class="healthbar text-center"
+                            style="background-color: green; margin: 0; color: white;"
+                            :style="{width: monsterHealth + '%'}">
+                        {{ monsterHealth }}
+                    </div>
+                </div>
+            </div>
+        </v-flex>
+    </v-layout>
+
+    <v-layout row>
+         <v-flex>
+             <section class="controls" v-if="!gameIsRunning">
+                <div class="small-12 columns">
+                    <button id="start-game" @click="startGame">START NEW GAME</button>
+                </div>
+            </section>
+            <section class="controls" v-else>
+                <div class="small-12 columns">
+                    <button id="attack" @click="attack">ATTACK</button>
+                    <button id="special-attack" @click="specialAttack">SPECIAL ATTACK</button>
+                    <button id="heal" @click="heal">HEAL</button>
+                    <button id="give-up" @click="giveUp">GIVE UP</button>
+                </div>
+            </section>
+        </v-flex>
+    </v-layout>
+
+    <v-layout row>
+        <v-flex>
+            <section class="log" v-if="turns.length > 0">
+                <div class="small-12 columns">
+                    <ul>
+                        <li v-for="(turn,key) in turns"
+                            :key="key"
+                            :class="{'player-turn': turn.isPlayer, 'monster-turn': !turn.isPlayer}">
+                            {{ turn.text }}
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </v-flex>
+            
+        <v-flex>
+            <Modal />
+        </v-flex>
+    </v-layout>
+    
+  </v-container>
 </template>
 
 <script>
+import Modal from './Modal'
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+    components: { Modal },
+
+    data: () => ({
+        playerHealth: 100,
+        monsterHealth: 100,
+        gameIsRunning: false,
+        turns: []
+    }),
+    methods: {
+        startGame: function () {
+                this.gameIsRunning = true;
+                this.playerHealth = 100;
+                this.monsterHealth = 100;
+                this.turns = [];
+            },
+            attack: function () {
+                var damage = this.calculateDamage(3, 10);
+                this.monsterHealth -= damage;
+                this.turns.unshift({
+                    isPlayer: true,
+                    text: 'Player hits Monster for ' + damage
+                });
+                if (this.checkWin()) {
+                    return;
+                }
+
+                this.monsterAttacks();
+            },
+            specialAttack: function () {
+                var damage = this.calculateDamage(10, 20);
+                this.monsterHealth -= damage;
+                this.turns.unshift({
+                    isPlayer: true,
+                    text: 'Player hits Monster hard for ' + damage
+                });
+                if (this.checkWin()) {
+                    return;
+                }
+                this.monsterAttacks();
+            },
+            heal: function () {
+                if (this.playerHealth <= 90) {
+                    this.playerHealth += 10;
+                } else {
+                    this.playerHealth = 100;
+                }
+                this.turns.unshift({
+                    isPlayer: true,
+                    text: 'Player heals for 10'
+                });
+                this.monsterAttacks();
+            },
+            giveUp: function () {
+                this.gameIsRunning = false;
+            },
+            monsterAttacks: function() {
+                var damage = this.calculateDamage(5, 12);
+                this.playerHealth -= damage;
+                this.checkWin();
+                this.turns.unshift({
+                    isPlayer: false,
+                    text: 'Monster hits Player for ' + damage
+                });
+            },
+            calculateDamage: function(min, max) {
+                return Math.max(Math.floor(Math.random() * max) + 1, min);
+            },
+            checkWin: function() {
+                if (this.monsterHealth <= 0) {
+                    if (confirm('You won! New Game?')) {
+                        this.modal = true;
+                        this.startGame();
+                    } else {
+                        this.gameIsRunning = false;
+                    }
+                    return true;
+                } else if (this.playerHealth <= 0) {
+                    if (confirm('You lost! New Game?')) {
+                        this.startGame();
+                    } else {
+                        this.gameIsRunning = false;
+                    }
+                    return true;
+                }
+                return false;
+            }
+    }
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+    .text-center {
+        text-align: center;
+    }
+
+    .healthbar {
+        width: 80%;
+        height: 40px;
+        background-color: #eee;
+        margin: auto;
+        transition: width 500ms;
+    }
+
+    .controls, .log {
+        margin-top: 30px;
+        text-align: center;
+        padding: 10px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 3px 6px #ccc;
+    }
+
+    .turn {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        font-size: 22px;
+    }
+
+    .log ul {
+        list-style: none;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .log ul li {
+        margin: 5px;
+    }
+
+    .log ul .player-turn {
+        color: blue;
+        background-color: #e4e8ff;
+    }
+
+    .log ul .monster-turn {
+        color: red;
+        background-color: #ffc0c1;
+    }
+
+    button {
+        font-size: 20px;
+        background-color: #eee;
+        padding: 12px;
+        box-shadow: 0 1px 1px black;
+        margin: 10px;
+    }
+
+    #start-game {
+        background-color: #aaffb0;
+    }
+
+    #start-game:hover {
+        background-color: #76ff7e;
+    }
+
+    #attack {
+        background-color: #ff7367;
+    }
+
+    #attack:hover {
+        background-color: #ff3f43;
+    }
+
+    #special-attack {
+        background-color: #ffaf4f;
+    }
+
+    #special-attack:hover {
+        background-color: #ff9a2b;
+    }
+
+    #heal {
+        background-color: #aaffb0;
+    }
+
+    #heal:hover {
+        background-color: #76ff7e;
+    }
+
+    #give-up {
+        background-color: #ffffff;
+    }
+
+    #give-up:hover {
+        background-color: #c7c7c7;
+    }
 </style>
