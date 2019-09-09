@@ -1,4 +1,4 @@
-<template>
+<template v-slot:activator="{ vm.showDialog }">
     <v-dialog max-width="600px">
         <v-card>
             <v-card-title>

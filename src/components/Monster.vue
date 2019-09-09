@@ -21,7 +21,8 @@
                     <div
                             class="healthbar text-center"
                             style="background-color: green; margin: 0; color: white;"
-                            :style="{width: monsterHealth + '%'}">
+                            :style="{width: monsterHealth + '%'}"
+                        >
                         {{ monsterHealth }}
                     </div>
                 </div>
@@ -31,14 +32,14 @@
 
     <v-layout row>
          <v-flex>
-            <section class="controls"  v-if="gameOver">
+            <section class="controls"  v-if="!gameOn">
                 <div class="small-12 columns">
                  <button id="start-game" @click="newGame()">START NEW GAME</button>
                 </div>
             </section>
 
             <section class="controls" v-else>
-                <div class="small-12 columns" v-if="!gameOver">
+                <div class="small-12 columns" v-if="gameOn">
                      <button id="attack"
                         @click="damageDone()"
                     >ATTACK</button>
@@ -51,7 +52,7 @@
     </v-layout>
 
     <v-layout row>
-        <v-flex sm12>
+        <v-flex xs12 md6>
             <section class="log" v-if="hits.length > 0">
                 <div class="small-12 columns">
                     <ul>
@@ -72,6 +73,7 @@
         </v-flex>
             
         <v-flex>
+          
             <Modal />
         </v-flex>
     </v-layout>
@@ -90,7 +92,7 @@ export default {
         monsterHealth: 100,
         specialAttack: false,
         heal: false,
-        gameOver: true,
+        gameOn: false,
         hits: [],
         logMessage: '',
         modalMessage: '',
@@ -105,6 +107,12 @@ export default {
                 } else { vm.playerHealth += 10 }
            }
            vm.heal="false";
+        },
+        gameOn: function() {
+            var vm = this;
+            if(!vm.gameOn) {
+               vm.showDialog = true;
+            }
         }
     },
     methods: {
@@ -112,7 +120,7 @@ export default {
         
             this.playerHealth  = 100;
             this.monsterHealth = 100;
-            this.gameOver = false;
+            this.gameOn = true;
             this.hits = [];
         
         },
@@ -132,12 +140,12 @@ export default {
 
             if(vm.monsterHealth <= 0) {
                 vm.monsterHealth = 0;
-                vm.gameOver = true;
+                vm.gameOn = false;
             }
 
             if(vm.playerHealth <= 0) {
                 vm.playerHealth = 0;
-                vm.gameOver = true;
+                vm.gameOn = false;
             }
             
             vm.hits.unshift(monsterDamage);
