@@ -38,7 +38,7 @@
 
             specialAttack: function() {
                 //generate a random modifier for the special damage
-                let modifier = Math.floor(Math.random() * 10);
+                //let modifier = Math.floor(Math.random() * 10);
                 this.$emit('specialAttack');
             },
             heal: function() {
