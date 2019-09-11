@@ -1,4 +1,4 @@
-<template class="logRow">
+<template class="LogRow">
     <v-container>
         <v-layout row>
             <v-flex sm12>
@@ -26,8 +26,6 @@
 
 <script>
     export default {
-        name: 'gameLog',
-
         data: () => ({
             hits: [],
             logMessage: ''

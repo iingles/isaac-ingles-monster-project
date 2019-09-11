@@ -1,4 +1,4 @@
-<template class="healthBars">
+<template class="HealthBars">
     <v-container>
         <v-layout row>
             <v-flex xs12 md6>
@@ -42,13 +42,67 @@
 
 <script>
     export default {
-        name: 'healthBars',
-
         data: () => ({
             playerHealth: 100,
             playerMagic: 100,
             monsterHealth: 100
-        })
+        }),
+        props: {
+            turnDamage: Number,
+            turn: String,
+            heal: Number
+        },
+        watch: {
+            turn: function() {
+                var vmh = this;
+
+                if(vmh.playerHealth <= 0) {
+                    vmh.playerHealth = 0;
+                    console.log('player lost');
+                    this.$emit('playerLost');
+
+                } else if(vmh.monsterHealth <= 0) {
+                    vmh.monsterHealth = 0;
+                    console.log('player won');
+                    this.emit('playerWon');
+                }
+
+                if(vmh.turnDamage > 0) {
+                    this.charDamage();
+                }
+
+            },
+            heal: function() {
+                if(this.playerMagic >= 10) {
+                    
+                    this.healMe();
+                } else { 
+                    this.playerMagic = 0;
+                    console.log('out of magic');
+                }
+            }
+            
+        },
+        methods: {
+            charDamage: function() {
+                var vmh = this;
+               
+               if(vmh.turn === 'player') {
+                    vmh.monsterHealth -= vmh.turnDamage;
+                } else { vmh.playerHealth -= vmh.turnDamage}
+                this.$emit('vmh.playerHealth', 'vmh.monsterHealth');
+            },
+            healMe: function() {
+                var vmh = this;
+                if(vmh.playerHealth >=90){
+                    vmh.playerHealth = 100
+                } else { vmh.playerHealth += vmh.heal; }
+
+                vmh.playerMagic -= 10;
+                console.log('heal');
+               // this.$emit('playerHealed');
+            }
+        }
     }
 </script>
 

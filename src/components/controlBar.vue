@@ -1,20 +1,20 @@
-<template class="controlRow">
+<template class="ControlRow">
     <v-container>
         <v-layout row>
             <v-flex>
 
-                <section class="controls">
+                <section class="controls" v-if="gameOver">
                     <div class="small-12 columns">
-                    <button id="start-game">START NEW GAME</button>
+                    <button id="start-game" @click="startGame()">START NEW GAME</button>
                     </div>
                 </section>
 
-                <section class="controls">
+                <section class="controls" v-else>
                     <div class="small-12 columns">
-                        <button id="attack">ATTACK</button>
-                        <button id="special-attack">SPECIAL ATTACK</button>
-                        <button id="heal">HEAL</button>
-                        <button id="give-up">GIVE UP</button>
+                        <button id="attack" @click="attack()">ATTACK</button>
+                        <button id="special-attack" @click="specialAttack()">MAGIC ATTACK</button>
+                        <button id="heal" @click="heal()">HEAL SPELL</button>
+                        <button id="give-up" @click="giveUp()">GIVE UP</button>
                     </div>
                 </section>
 
@@ -25,11 +25,32 @@
 
 <script>
     export default {
-        name: 'controlBar',
-
+        props: {
+            gameOver: Boolean
+        },
         data: () => ({
+            
+        }),
+        methods: {
+            attack: function() {
+                this.$emit('attack');
+            },
 
-        })
+            specialAttack: function() {
+                //generate a random modifier for the special damage
+                let modifier = Math.floor(Math.random() * 10);
+                this.$emit('specialAttack');
+            },
+            heal: function() {
+                this.$emit('heal');
+            },
+            giveUp: function() {
+                this.$emit('giveUp');
+            },
+            startGame: function() {
+                this.$emit('startGame');
+            }
+        }
     }
 </script>
 
