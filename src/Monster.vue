@@ -28,11 +28,12 @@
   import GameLog from './components/GameLog';
 
   export default {
-
+    //Max said I didn't need to use a 'name'... is a name necessary?
     components: {
-      HealthBars,
-      ControlBar,
-      GameLog
+    //should I use the Vue version of registration, or just the ES6 version as I've done here?
+    HealthBars,
+    ControlBar,
+    GameLog
     },   
     data: () => ({
       gameOver: true,

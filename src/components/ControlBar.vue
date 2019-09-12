@@ -5,16 +5,16 @@
 
                 <section class="controls" v-if="gameOver">
                     <div class="small-12 columns">
-                    <button id="start-game" @click="startGame()">START NEW GAME</button>
+                       <v-btn color="red primary" id="start-game" @click="startGame()">START NEW GAME</v-btn>
                     </div>
                 </section>
 
                 <section class="controls" v-else>
                     <div class="small-12 columns">
-                        <button id="attack" @click="attack()">ATTACK</button>
-                        <button id="special-attack" @click="specialAttack()">MAGIC ATTACK</button>
-                        <button id="heal" @click="heal()">HEAL SPELL</button>
-                        <button id="give-up" @click="giveUp()">GIVE UP</button>
+                        <v-btn class="ma-2" id="attack" color="red" @click="attack()">ATTACK</v-btn>
+                        <v-btn class="ma-2" id="special-attack" color="orange" @click="specialAttack()">MAGIC ATTACK</v-btn>
+                        <v-btn class="ma-2" id="heal" color="blue" @click="heal()">HEAL SPELL</v-btn>
+                        <v-btn class="ma-2" id="give-up" color="black"  @click="giveUp()">GIVE UP</v-btn>
                     </div>
                 </section>
 
@@ -63,12 +63,10 @@
         box-shadow: 0px 3px 6px #ccc;
     }
 
-    button {
+    .action-button {
         font-size: 20px;
-        background-color: #eee;
         padding: 12px;
-        box-shadow: 0 1px 1px black;
-        margin: 10px;
+   
     }
 
     #start-game {
@@ -81,6 +79,7 @@
 
     #attack {
         background-color: #ff7367;
+        color: #fff;
     }
 
     #attack:hover {
@@ -88,7 +87,7 @@
     }
 
     #special-attack {
-        background-color: #ffaf4f;
+       color: #fff;
     }
 
     #special-attack:hover {
@@ -96,7 +95,7 @@
     }
 
     #heal {
-        background-color: #aaffb0;
+        color: #fff;
     }
 
     #heal:hover {
@@ -104,7 +103,7 @@
     }
 
     #give-up {
-        background-color: #ffffff;
+        color: #fff;
     }
 
     #give-up:hover {

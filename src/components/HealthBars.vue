@@ -1,8 +1,8 @@
 <template class="HealthBars">
     <v-container>
         <v-layout row>
-            <v-flex xs12 md6>
-                <div class="small-6 columns">
+            <v-flex xs5 justify-left>
+                <div class="small-5 columns">
                     <h1 class="text-center">YOU</h1>
                     <div class="healthbar">
                         <div
@@ -23,8 +23,9 @@
                     </div>
                 </div>
             </v-flex>
-            <v-flex xs12 md6>
-                <div class="small-6 columns">
+            <div class="flex-grow-1"></div>
+            <v-flex xs5 justify-right>
+                <div class="small-4 columns">
                     <h1 class="text-center">MONSTER</h1>
                     <div class="healthbar">
                         <div
@@ -109,8 +110,8 @@
 <style scoped>
     .healthbar, .magicbar {
         width: 100%;
-        height: 40px;
-        background-color: #eee;
+        height: 50px;
+        background-color: #ccc;
         margin: auto;
         transition: width 500ms;
     }
