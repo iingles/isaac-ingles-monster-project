@@ -1,7 +1,12 @@
 <template class="HealthBars">
     <v-container>
         <v-layout row>
-            <v-flex xs5 justify-left>
+            <v-flex xs1>
+                <v-img 
+                src=http://placekitten.com/50/50
+                ></v-img>
+            </v-flex>
+            <v-flex xs4 justify-left>
                 <div class="small-5 columns">
                     <h1 class="text-center">YOU</h1>
                     <div class="healthbar">
@@ -24,7 +29,7 @@
                 </div>
             </v-flex>
             <div class="flex-grow-1"></div>
-            <v-flex xs5 justify-right>
+            <v-flex xs4 justify-right>
                 <div class="small-4 columns">
                     <h1 class="text-center">MONSTER</h1>
                     <div class="healthbar">
@@ -36,6 +41,12 @@
                         </div>
                     </div>
                 </div>
+            </v-flex>
+
+            <v-flex xs1>
+                <v-img 
+                    src=http://placekitten.com/50/50
+                ></v-img>
             </v-flex>
         </v-layout>
     </v-container>

@@ -7,6 +7,7 @@
       :turnDamage="this.turnDamage"
       :heal="heal"
       :turn="turn"
+      @playerLost="this.playerLost"
       />      
       <ControlBar 
       ControlRow
@@ -30,7 +31,6 @@
   export default {
     //Max said I didn't need to use a 'name'... is a name necessary?
     components: {
-    //should I use the Vue version of registration, or just the ES6 version as I've done here?
     HealthBars,
     ControlBar,
     GameLog
@@ -86,6 +86,9 @@
           this.turn = 'monster'
         } else { this.turn = 'player' }
         console.log("turn: " + this.turn);
+      },
+      playerLost: function() {
+        this.gameOver = true;
       }
     }
   };
