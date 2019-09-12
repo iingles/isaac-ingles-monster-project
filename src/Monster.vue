@@ -75,7 +75,7 @@
         this.turnState();
       },
       playerHeal: function() {
-        this.heal = Math.floor(Math.random() * 10);
+        this.heal = 10;
         console.log("healed for " + this.heal);
       },
       giveUpConfirm: function() {
