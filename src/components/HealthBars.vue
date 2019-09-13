@@ -71,7 +71,8 @@
         props: {
             turnDamage: Number,
             turn: String,
-            heal: Number
+            heal: Number,
+            createNewGame: Boolean
         },
         watch: {
             turn: function() {
@@ -85,7 +86,7 @@
                 } else if(vmh.monsterHealth <= 0) {
                     vmh.monsterHealth = 0;
                     console.log('player won');
-                    this.emit('playerWon');
+                    this.$emit('playerWon');
                 }
 
                 if(vmh.turnDamage > 0) {
@@ -101,8 +102,13 @@
                     this.playerMagic = 0;
                     console.log('out of magic');
                 }
+            },
+            createNewGame: function() {
+                this.playerHealth = 100;
+                this.monsterHealth = 100;
+                this.playerMagic = 100;
             }
-            
+        
         },
         methods: {
             charDamage: function() {

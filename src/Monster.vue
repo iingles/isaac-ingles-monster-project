@@ -3,11 +3,13 @@
     <v-content>
       <HealthBars 
       HealthBars 
-
+      :newGame="this.newGame"
       :turnDamage="this.turnDamage"
       :heal="heal"
       :turn="turn"
+      :createNewGame="gameOver"
       @playerLost="this.playerLost"
+      @playerWon="this.playerWon"
       />      
       <ControlBar 
       ControlRow
@@ -47,8 +49,7 @@
       },
       turn: function() {
         if(this.gameOver == false) {
-          //this.turnDamage = 0;
-          this.heal = 0;
+          //this.heal = 0;
         }
       }
     },
@@ -56,11 +57,7 @@
       newGame: function() {
         this.gameOver = false;
         this.turn = 'player';
-        //reset everything
-    
-        // this.playerHealth  = 100;
-        // this.monsterHealth = 100;
-        // this.hits = [];
+        
       
       },
       damageDone: function(turnDamage) {
@@ -88,6 +85,9 @@
         console.log("turn: " + this.turn);
       },
       playerLost: function() {
+        this.gameOver = true;
+      },
+      playerWon: function() {
         this.gameOver = true;
       }
     }
