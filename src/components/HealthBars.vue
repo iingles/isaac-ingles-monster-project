@@ -95,12 +95,16 @@
 
             },
             heal: function() {
-                if(this.playerMagic >= 10) {
-                    
-                    this.healMe();
-                } else { 
-                    this.playerMagic = 0;
-                    console.log('out of magic');
+                var vmh = this;
+                if(this.playerMagic < 10) {                    
+                   console.log('out of magic');
+                } else {
+                    if(vmh.playerHealth >=90){
+                        vmh.playerHealth = 100
+                    } else { vmh.playerHealth += vmh.heal; }
+
+                    vmh.playerMagic -= 10;
+                    console.log('heal');
                 }
             },
             createNewGame: function() {
@@ -119,16 +123,6 @@
                 } else { vmh.playerHealth -= vmh.turnDamage}
                 this.$emit('vmh.playerHealth', 'vmh.monsterHealth');
             },
-            healMe: function() {
-                var vmh = this;
-                if(vmh.playerHealth >=90){
-                    vmh.playerHealth = 100
-                } else { vmh.playerHealth += vmh.heal; }
-
-                vmh.playerMagic -= 10;
-                console.log('heal');
-               // this.$emit('playerHealed');
-            }
         }
     }
 </script>

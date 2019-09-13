@@ -14,7 +14,7 @@
       <ControlBar 
       ControlRow
        @attack="damageDone" 
-       @specialAttack="damageDone" 
+       @specialAttack="damageDone(Math.floor(Math.random() * 10))" 
        @heal="playerHeal" 
        @giveUp="giveUpConfirm"
        @startGame="newGame"
@@ -57,15 +57,17 @@
       newGame: function() {
         this.gameOver = false;
         this.turn = 'player';
-        
-      
       },
-      damageDone: function(turnDamage) {
+      damageDone: function(modifier) {
         //universal, random damage generation plus an optional modifier
         let damage = 0;
 
         //calculate the damage done plus modifier
-        damage = Math.floor(Math.random() * 10);
+        if(modifier) {
+          damage = Math.floor(Math.random() * 10) + modifier;
+        } else {
+          damage = Math.floor(Math.random() * 10);
+        }   
 
         console.log("damage: " + damage);
         this.turnDamage = damage;
@@ -73,13 +75,13 @@
       },
       playerHeal: function() {
         this.heal = 10;
-        console.log("healed for " + this.heal);
       },
       giveUpConfirm: function() {
 
       },
       turnState: function() {
         if(this.turn == 'player') {
+
           this.turn = 'monster'
         } else { this.turn = 'player' }
         console.log("turn: " + this.turn);

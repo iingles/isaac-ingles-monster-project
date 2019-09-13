@@ -12,7 +12,7 @@
                 <section class="controls" v-else>
                     <div class="small-12 columns">
                         <v-btn class="ma-2" id="attack" color="red" @click="attack()">ATTACK</v-btn>
-                        <v-btn class="ma-2" id="special-attack" color="orange" @click="specialAttack()">MAGIC ATTACK</v-btn>
+                        <v-btn class="ma-2" id="special-attack" color="orange" @click="specialAttack()">SPECIAL ATTACK</v-btn>
                         <v-btn class="ma-2" id="heal" color="blue" @click="heal()">HEAL SPELL</v-btn>
                         <v-btn class="ma-2" id="give-up" color="black"  @click="giveUp()">GIVE UP</v-btn>
                     </div>
@@ -37,8 +37,6 @@
             },
 
             specialAttack: function() {
-                //generate a random modifier for the special damage
-                //let modifier = Math.floor(Math.random() * 10);
                 this.$emit('specialAttack');
             },
             heal: function() {
