@@ -14,8 +14,9 @@
             <v-flex xs4 justify-left>
                 <div class="small-5 columns">
                     <h1 class="text-center">YOU</h1>
-                    <div class="healthbar">
+                    <div class="healthbar" >
                         <div
+                                id="playerHealthBar"
                                 class="healthbar text-center"
                                 style="background-color: green; margin: 0; color: white;"
                                 :style="{width: playerHealth + '%'}">
@@ -40,6 +41,7 @@
                     <h1 class="text-center">MONSTER</h1>
                     <div class="healthbar">
                         <div
+                                id="monsterHealthBar"
                                 class="healthbar text-center"
                                 style="background-color: green; margin: 0; color: white;"
                                 :style="{ width: monsterHealth + '%'}">
@@ -111,8 +113,21 @@
                 this.playerHealth = 100;
                 this.monsterHealth = 100;
                 this.playerMagic = 100;
-            }
-        
+            },
+            playerHealth: function() {
+                if(this.playerHealth < 25) {
+                    document.getElementById('playerHealthBar').style.backgroundColor ="red";
+                } else if(this.playerHealth > 25) { 
+                    document.getElementById('playerHealthBar').style.backgroundColor ="green"; 
+                }
+            },
+            monsterHealth: function() {
+                if(this.monsterHealth < 25) {
+                    document.getElementById('monsterHealthBar').style.backgroundColor ="red";
+                } else if(this.monsterHealth > 25) { 
+                    document.getElementById('monsterHealthBar').style.backgroundColor ="green"; 
+                }
+            }      
         },
         methods: {
             charDamage: function() {

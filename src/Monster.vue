@@ -81,7 +81,6 @@
       },
       turnState: function() {
         if(this.turn == 'player') {
-
           this.turn = 'monster'
         } else { this.turn = 'player' }
         console.log("turn: " + this.turn);
