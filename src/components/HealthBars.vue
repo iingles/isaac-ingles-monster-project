@@ -52,7 +52,7 @@
             <v-flex xs1 mt-12 ml-1>
                 <v-img 
                     class="img-center"
-                    src="../assets/design_images/smiley.png"
+                    src="../assets/design_images/monster.png"
                     max-width="50"
                     max-height="50"
                 ></v-img>
