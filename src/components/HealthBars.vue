@@ -1,9 +1,14 @@
 <template class="HealthBars">
     <v-container>
-        <v-layout row>
-            <v-flex xs1>
+        <v-layout row >
+
+            <v-flex xs1 mt-12 mr-1>
+
                 <v-img 
-                src=http://placekitten.com/50/50
+                    class="img-center" 
+                    src="../assets/design_images/smiley.png"
+                    max-width="50"
+                    max-height="50"
                 ></v-img>
             </v-flex>
             <v-flex xs4 justify-left>
@@ -29,6 +34,7 @@
                 </div>
             </v-flex>
             <div class="flex-grow-1"></div>
+            <div class="flex-grow-1"></div>
             <v-flex xs4 justify-right>
                 <div class="small-4 columns">
                     <h1 class="text-center">MONSTER</h1>
@@ -39,13 +45,16 @@
                                 :style="{ width: monsterHealth + '%'}">
                             {{ monsterHealth }} / 100
                         </div>
-                    </div>
+                  </div>
                 </div>
             </v-flex>
 
-            <v-flex xs1>
+            <v-flex xs1 mt-12 ml-1>
                 <v-img 
-                    src=http://placekitten.com/50/50
+                    class="img-center"
+                    src="../assets/design_images/smiley.png"
+                    max-width="50"
+                    max-height="50"
                 ></v-img>
             </v-flex>
         </v-layout>
@@ -125,5 +134,9 @@
         background-color: #ccc;
         margin: auto;
         transition: width 500ms;
+    }
+
+    .img-center {
+        margin: 0 auto;
     }
 </style>
