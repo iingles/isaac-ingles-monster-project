@@ -77,7 +77,7 @@
         this.heal = 10;
       },
       giveUpConfirm: function() {
-
+        this.gameOver = true;
       },
       turnState: function() {
         if(this.turn == 'player') {
