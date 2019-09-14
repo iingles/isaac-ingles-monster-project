@@ -10,6 +10,7 @@
       :createNewGame="gameOver"
       @playerLost="this.playerLost"
       @playerWon="this.playerWon"
+      @changeTurn="turnState"
       />      
       <ControlBar 
       ControlRow
@@ -18,6 +19,7 @@
        @heal="playerHeal" 
        @giveUp="giveUpConfirm"
        @startGame="newGame"
+
        :gameOver="this.gameOver"
        />
       <GameLog LogRow 
@@ -53,7 +55,6 @@
       },
       turn: function() {
         if(this.gameOver == false) {
-          //this.heal = 0;
         }
       }
     },
@@ -77,8 +78,7 @@
           }  
         }        
         this.turnDamage = damage;
-
-        this.turnState();
+        console.log("Damage: " + damage);
       },
       playerHeal: function() {
         this.heal = 10;
@@ -87,13 +87,13 @@
         this.gameOver = true;
       },
       turnState: function() {
-
-        if(this.turn === 'player') {
-          this.logString = 'Player hits monster for ' + this.turnDamage + ' HP';
-          this.turn = 'monster'          
+        var vm = this;
+        if(vm.turn === 'player') {
+          vm.logString = 'Player hits monster for ' + vm.turnDamage + ' HP';
+          vm.turn = 'monster'          
         } else {           
-          this.logString = 'Monster hits player for ' + this.turnDamage + ' HP';
-          this.turn = 'player' 
+          vm.logString = 'Monster hits player for ' + vm.turnDamage + ' HP';
+          vm.turn = 'player' 
         }
 
       },

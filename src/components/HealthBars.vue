@@ -77,7 +77,7 @@
             createNewGame: Boolean
         },
         watch: {
-            turn: function() {
+            turnDamage: function() {
                 var vmh = this;
 
                 if(vmh.playerHealth <= 0) {
@@ -107,6 +107,7 @@
 
                     vmh.playerMagic -= 10;
                     console.log('heal');
+                    this.$emit('changeTurn');
                 }
             },
             createNewGame: function() {
@@ -120,6 +121,7 @@
                 } else if(this.playerHealth > 25) { 
                     document.getElementById('playerHealthBar').style.backgroundColor ="green"; 
                 }
+                
             },
             monsterHealth: function() {
                 if(this.monsterHealth < 25) {
@@ -135,9 +137,11 @@
                
                if(vmh.turn === 'player') {
                     vmh.monsterHealth -= vmh.turnDamage;
+                    this.$emit('changeTurn');
                 } 
                if(vmh.turn === 'monster') { 
-                   vmh.playerHealth -= vmh.turnDamage
+                   vmh.playerHealth -= vmh.turnDamage;
+                   this.$emit('changeTurn');
                 }
                 this.$emit('vmh.playerHealth', 'vmh.monsterHealth');
             },

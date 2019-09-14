@@ -7,7 +7,7 @@
                         <ul>
 
                             <li v-for="(hit,hitKey) in hits"
-                                :class="{'player-turn': hits.isPlayer, 'monster-turn': !hits.isPlayer}"
+                                :class="{'player-turn': isPlayer, 'monster-turn': !isPlayer}"
                                 :key="hitKey"
                             >
                                 {{ hit.text }}
@@ -35,6 +35,7 @@
     export default {
         data: () => ({
             hits: [],
+            isPlayer: ''
         }),
         props: {
             turnState: String,
@@ -46,13 +47,19 @@
                 var vm = this;
 
             this.hits.unshift({
-                isPlayer: true,
                 text: vm.turnInfo
             });
 
                //vm.hits.unshift(vm.turnInfo);
+            },
+            turnState: function() {
+                var vm = this;
+                if(vm.turnState === 'player') {
+                    vm.isPlayer == true;
+                } else { vm.isPlayer == false; }
             }
-        }
+        },
+
     }
 </script>
 
