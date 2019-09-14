@@ -5,17 +5,24 @@
                 <section class="log" v-if="hits.length > 0">
                     <div class="small-12 columns">
                         <ul>
-                            <li 
+
+                            <li v-for="(hit,hitKey) in hits"
+                                :class="{'player-turn': hits.isPlayer, 'monster-turn': !hits.isPlayer}"
+                                :key="hitKey"
+                            >
+                                {{ hit.text }}
+                            </li>
+                            <!-- <li 
                             v-for="(hit, key) in this.hits" 
                             :key="key"
                             >
-                                <div v-if="turnState === 'player'" class="player-turn">
+                                <div v-if="key %2 != 0" class="monster-turn">
                                     {{hit}}
                                 </div>
-                                <!-- <div v-if="turnState === 'monster'" class="monster-turn">
+                                <div v-else class="player-turn">
                                     {{hit}}
-                                </div> -->
-                            </li>
+                                </div>
+                            </li> -->
                         </ul>
                     </div>
                 </section>
@@ -37,9 +44,13 @@
         watch: {
             turnInfo: function() {
                 var vm = this;
-                console.log(vm.turnState);
 
-                vm.hits.unshift(vm.turnInfo);
+            this.hits.unshift({
+                isPlayer: true,
+                text: vm.turnInfo
+            });
+
+               //vm.hits.unshift(vm.turnInfo);
             }
         }
     }

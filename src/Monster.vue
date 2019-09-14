@@ -78,8 +78,7 @@
         }        
         this.turnDamage = damage;
 
-        
-        //this.turnState();
+        this.turnState();
       },
       playerHeal: function() {
         this.heal = 10;
