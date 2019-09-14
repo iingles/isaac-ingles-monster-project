@@ -61,12 +61,13 @@
       newGame: function() {
         this.gameOver = false;
         this.turn = 'player';
+
         this.logString = ''
       },
       damageDone: function(modifier) {
+
         //universal, random damage generation plus an optional modifier
         let damage = 0;
-
         //calculate the damage done plus modifier; don't let the damage == 0
         while(damage == 0) {
            if(modifier) {
@@ -76,7 +77,9 @@
           }  
         }        
         this.turnDamage = damage;
-        this.turnState();
+
+        
+        //this.turnState();
       },
       playerHeal: function() {
         this.heal = 10;
@@ -85,6 +88,7 @@
         this.gameOver = true;
       },
       turnState: function() {
+
         if(this.turn === 'player') {
           this.logString = 'Player hits monster for ' + this.turnDamage + ' HP';
           this.turn = 'monster'          
@@ -92,6 +96,7 @@
           this.logString = 'Monster hits player for ' + this.turnDamage + ' HP';
           this.turn = 'player' 
         }
+
       },
       playerLost: function() {
         this.gameOver = true;
