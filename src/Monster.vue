@@ -20,7 +20,9 @@
        @startGame="newGame"
        :gameOver="this.gameOver"
        />
-      <GameLog LogRow />
+      <GameLog LogRow 
+      :turnInfo="this.logString"
+      />
     </v-content>
   </v-app>
 </template>
@@ -41,7 +43,8 @@
       gameOver: true,
       turn: '',
       turnDamage: 0,
-      heal: 0
+      heal: 0,
+      logString: ''
     }),    
     watch: {
       gameOver: function() {
@@ -62,14 +65,14 @@
         //universal, random damage generation plus an optional modifier
         let damage = 0;
 
-        //calculate the damage done plus modifier
-        if(modifier) {
+        //calculate the damage done plus modifier; don't let the damage == 0
+        while(damage == 0) {
+           if(modifier) {
           damage = Math.floor(Math.random() * 10) + modifier;
-        } else {
-          damage = Math.floor(Math.random() * 10);
-        }   
-
-        console.log("damage: " + damage);
+          } else {
+            damage = Math.floor(Math.random() * 10);
+          }  
+        }        
         this.turnDamage = damage;
         this.turnState();
       },
@@ -80,10 +83,14 @@
         this.gameOver = true;
       },
       turnState: function() {
-        if(this.turn == 'player') {
-          this.turn = 'monster'
-        } else { this.turn = 'player' }
-        console.log("turn: " + this.turn);
+        if(this.turn === 'player') {
+          this.logString = 'Player hits monster for ' + this.turnDamage + ' HP';
+          this.turn = 'monster'          
+        } else {           
+          this.logString = 'Monster hits player for ' + this.turnDamage + ' HP';
+          this.turn = 'player' 
+        }
+        console.log(this.logString);
       },
       playerLost: function() {
         this.gameOver = true;

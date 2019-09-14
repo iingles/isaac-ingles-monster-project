@@ -135,7 +135,10 @@
                
                if(vmh.turn === 'player') {
                     vmh.monsterHealth -= vmh.turnDamage;
-                } else { vmh.playerHealth -= vmh.turnDamage}
+                } 
+               if(vmh.turn === 'monster') { 
+                   vmh.playerHealth -= vmh.turnDamage
+                }
                 this.$emit('vmh.playerHealth', 'vmh.monsterHealth');
             },
         }

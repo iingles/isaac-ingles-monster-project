@@ -35,7 +35,6 @@
             attack: function() {
                 this.$emit('attack');
             },
-
             specialAttack: function() {
                 this.$emit('specialAttack');
             },

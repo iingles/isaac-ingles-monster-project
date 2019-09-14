@@ -6,7 +6,7 @@
                     <div class="small-12 columns">
                         <ul>
                             <li 
-                            v-for="(hit, key) in hits" 
+                            v-for="(hit, key) in this.hits" 
                             :key="key"
                             >
                                 <div v-if="key %2 == 0" class="monster-turn">
@@ -28,8 +28,16 @@
     export default {
         data: () => ({
             hits: [],
-            logMessage: ''
-        })
+        }),
+        props: {
+            turnIinfo: String
+        },
+        watch: {
+            turnInfo: function() {
+                this.hits.shift(this.turnInfo);
+                console.log(this.hits);
+            }
+        }
     }
 </script>
 
