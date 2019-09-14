@@ -5,23 +5,11 @@
                 <section class="log" v-if="hits.length > 0">
                     <div class="small-12 columns">
                         <ul>
-
-                            <!-- <li v-for="(hit,hitKey) in hits"
+                            <li v-for="(hit,hitKey) in hits"
                                 :class="{'player-turn': isPlayer, 'monster-turn': !isPlayer}"
                                 :key="hitKey"
                             >
-                                {{ hit.text }} {{ hitKey }}
-                            </li> -->
-                            <li 
-                            v-for="(hit, key) in this.hits" 
-                            :key="key"
-                            >
-                                <div v-if="key %2 != 0" class="monster-turn">
-                                    {{ hit.text }} 
-                                </div>
-                                <div v-else class="player-turn">
-                                    {{ hit.text }} 
-                                </div>
+                                {{ hit.text }} key: {{ hitKey }} isPlayer: {{ isPlayer }}
                             </li>
                         </ul>
                     </div>
@@ -46,11 +34,9 @@
             turnInfo: function() {
                 var vm = this;
 
-            this.hits.push({
+            vm.hits.unshift({
                 text: vm.turnInfo
             });
-
-               //vm.hits.unshift(vm.turnInfo);
             },
             turnState: function() {
                 var vm = this;
@@ -60,7 +46,15 @@
                 else {
                      vm.isPlayer = false;
                  }
-            }
+            },
+            clearLog: function() {
+                var vm = this;
+
+                if(vm.clearLog == true) {
+                    vm.hits = [];
+                }
+            },
+            
         },
 
     }

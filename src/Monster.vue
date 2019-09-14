@@ -25,6 +25,7 @@
       <GameLog LogRow 
         :turnInfo="this.logString"
         :turnState="this.turn"
+        :clearLog="this.gameOver"
       />
     </v-content>
   </v-app>
