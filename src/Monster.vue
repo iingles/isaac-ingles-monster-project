@@ -29,6 +29,7 @@
       />
       <Modal 
         :showModal="this.showModal"
+        @modalShown="newGame"
       />
     </v-content>
   </v-app>
@@ -67,6 +68,7 @@
     },
     methods: {
       newGame: function() {
+        this.showModal = false;
         this.gameOver = false;
         this.turn = 'player';
 
@@ -106,11 +108,11 @@
       },
       playerLost: function() {
         this.showModal = true;
-        console.log(this.showModal);        this.gameOver = true;
+        console.log(this.showModal);
+        this.gameOver = true;
       },
       playerWon: function() {
         this.showModal = true;
-
         this.gameOver = true;
       }
     }
