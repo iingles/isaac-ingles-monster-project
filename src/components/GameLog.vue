@@ -5,12 +5,22 @@
                 <section class="log" v-if="hits.length > 0">
                     <div class="small-12 columns">
                         <ul>
-                            <li v-for="(hit,hitKey) in hits"
-                                :class="{'player-turn': isPlayer, 'monster-turn': !isPlayer}"
+                            <li v-for="(hit,hitKey,isPlayer) in hits"
+                                
                                 :key="hitKey"
                             >
-                                {{ hit.text }} key: {{ hitKey }} isPlayer: {{ isPlayer }}
+                                {{ hit.text }}
                             </li>
+                            <!-- <li v-for="(hit,hitKey) in hits" :key="hitKey">
+                                <div v-if="turnState == 'player'" class="player-turn">
+                                    {{ hit.text }} turn: {{ turnState }}
+                                </div>
+                                <div v-else class="monster-turn">
+                                     {{ hit.text }} turn: {{ turnState }}
+                                </div>
+                                    :class="{'player-turn': hit.isPlayer, 'monster-turn': !hit.isPlayer}"
+
+                            </li> -->
                         </ul>
                     </div>
                 </section>
@@ -23,7 +33,6 @@
     export default {
         data: () => ({
             hits: [],
-            isPlayer: true
         }),
         props: {
             turnState: String,
@@ -34,17 +43,24 @@
             turnInfo: function() {
                 var vm = this;
 
-            vm.hits.unshift({
-                text: vm.turnInfo
-            });
+            // vm.hits.unshift({
+            //     text: vm.turnInfo
+            //     isPlayer: true,
+            // });
             },
             turnState: function() {
                 var vm = this;
                 if(vm.turnState === 'player') {
-                    vm.isPlayer = true;
+                        vm.hits.unshift({
+                        isPlayer: true,
+                        text: vm.turnInfo
+                    });
                 } 
                 else {
-                     vm.isPlayer = false;
+                    vm.hits.unshift({
+                        isPlayer: false,
+                        text: vm.turnInfo
+                    });
                  }
             },
             clearLog: function() {
