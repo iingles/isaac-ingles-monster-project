@@ -106,12 +106,11 @@
       },
       playerLost: function() {
         this.showModal = true;
-        console.log(this.showModal);
-        this.gameOver = true;
+        console.log(this.showModal);        this.gameOver = true;
       },
       playerWon: function() {
         this.showModal = true;
-        console.log(this.showModal);
+
         this.gameOver = true;
       }
     }
