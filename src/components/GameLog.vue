@@ -9,11 +9,8 @@
                             v-for="(hit, key) in this.hits" 
                             :key="key"
                             >
-                                <div v-if="key %2 == 0" class="monster-turn">
-                                    {{hits}}
-                                </div>
-                                <div v-else class="player-turn">
-                                    {{hits}}                 
+                                <div class="monster-turn">
+                                    {{hit}}
                                 </div>
                             </li>
                         </ul>
@@ -37,12 +34,9 @@
         watch: {
             turnInfo: function() {
                 var vm = this;
-                if(!vm.hits) {
-                    vm.hits = [];
-                } else {
-                    vm.hits.unshift(this.turnInfo);
-                }
                 
+                vm.hits.unshift(vm.turnInfo);
+
             }
         }
     }

@@ -35,10 +35,10 @@
 
   export default {
     //Max said I didn't need to use a 'name'... is a name necessary?
-    components: {
-    HealthBars,
-    ControlBar,
-    GameLog
+      components: {
+      HealthBars,
+      ControlBar,
+      GameLog
     },   
     data: () => ({
       gameOver: true,
@@ -92,7 +92,6 @@
           this.logString = 'Monster hits player for ' + this.turnDamage + ' HP';
           this.turn = 'player' 
         }
-        console.log(this.logString);
       },
       playerLost: function() {
         this.gameOver = true;
