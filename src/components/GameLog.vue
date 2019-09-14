@@ -10,10 +10,10 @@
                             :key="key"
                             >
                                 <div v-if="key %2 == 0" class="monster-turn">
-                                    Monster hits Player for {{ hit }}
+                                    {{hits}}
                                 </div>
                                 <div v-else class="player-turn">
-                                    Player hits Monster for {{ hit }}                            
+                                    {{hits}}                 
                                 </div>
                             </li>
                         </ul>
@@ -30,12 +30,19 @@
             hits: [],
         }),
         props: {
-            turnIinfo: String
+            turnState: String,
+            turnInfo: String,
+            clearLog: Boolean
         },
         watch: {
             turnInfo: function() {
-                this.hits.shift(this.turnInfo);
-                console.log(this.hits);
+                var vm = this;
+                if(!vm.hits) {
+                    vm.hits = [];
+                } else {
+                    vm.hits.unshift(this.turnInfo);
+                }
+                
             }
         }
     }

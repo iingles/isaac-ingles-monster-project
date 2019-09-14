@@ -21,7 +21,8 @@
        :gameOver="this.gameOver"
        />
       <GameLog LogRow 
-      :turnInfo="this.logString"
+        :turnInfo="this.logString"
+        :turnState="this.turn"
       />
     </v-content>
   </v-app>
@@ -60,6 +61,7 @@
       newGame: function() {
         this.gameOver = false;
         this.turn = 'player';
+        this.logString = ''
       },
       damageDone: function(modifier) {
         //universal, random damage generation plus an optional modifier
