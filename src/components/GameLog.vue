@@ -5,7 +5,7 @@
                 <section class="log" v-if="hits.length > 0">
                     <div class="small-12 columns">
                         <ul>
-                            <li v-for="(hit,hitKey,isPlayer) in hits"
+                            <li v-for="(hit,hitKey) in hits"
                                 
                                 :key="hitKey"
                             >
@@ -43,10 +43,6 @@
             turnInfo: function() {
                 var vm = this;
 
-            // vm.hits.unshift({
-            //     text: vm.turnInfo
-            //     isPlayer: true,
-            // });
             },
             turnState: function() {
                 var vm = this;

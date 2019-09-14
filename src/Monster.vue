@@ -27,6 +27,9 @@
         :turnState="this.turn"
         :clearLog="this.gameOver"
       />
+      <Modal 
+        :showModal="this.showModal"
+      />
     </v-content>
   </v-app>
 </template>
@@ -35,20 +38,23 @@
   import HealthBars from './components/HealthBars.vue';
   import ControlBar from './components/ControlBar';
   import GameLog from './components/GameLog';
+  import Modal from './components/Modal';
 
   export default {
     //Max said I didn't need to use a 'name'... is a name necessary?
       components: {
       HealthBars,
       ControlBar,
-      GameLog
+      GameLog,
+      Modal
     },   
     data: () => ({
       gameOver: true,
       turn: '',
       turnDamage: 0,
       heal: 0,
-      logString: ''
+      logString: '',
+      showModal: false
     }),    
     watch: {
       gameOver: function() {
@@ -90,7 +96,8 @@
         var vm = this;
         if(vm.turn === 'player') {
           vm.logString = 'Player hits monster for ' + vm.turnDamage + ' HP';
-          vm.turn = 'monster'          
+          vm.turn = 'monster' 
+          vm.damageDone();        
         } else {           
           vm.logString = 'Monster hits player for ' + vm.turnDamage + ' HP';
           vm.turn = 'player' 
@@ -98,9 +105,13 @@
 
       },
       playerLost: function() {
+        this.showModal = true;
+        console.log(this.showModal);
         this.gameOver = true;
       },
       playerWon: function() {
+        this.showModal = true;
+        console.log(this.showModal);
         this.gameOver = true;
       }
     }
