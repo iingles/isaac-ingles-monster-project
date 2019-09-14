@@ -78,7 +78,6 @@
           }  
         }        
         this.turnDamage = damage;
-        console.log("Damage: " + damage);
       },
       playerHeal: function() {
         this.heal = 10;

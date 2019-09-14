@@ -6,23 +6,23 @@
                     <div class="small-12 columns">
                         <ul>
 
-                            <li v-for="(hit,hitKey) in hits"
+                            <!-- <li v-for="(hit,hitKey) in hits"
                                 :class="{'player-turn': isPlayer, 'monster-turn': !isPlayer}"
                                 :key="hitKey"
                             >
-                                {{ hit.text }}
-                            </li>
-                            <!-- <li 
+                                {{ hit.text }} {{ hitKey }}
+                            </li> -->
+                            <li 
                             v-for="(hit, key) in this.hits" 
                             :key="key"
                             >
                                 <div v-if="key %2 != 0" class="monster-turn">
-                                    {{hit}}
+                                    {{ hit.text }} 
                                 </div>
                                 <div v-else class="player-turn">
-                                    {{hit}}
+                                    {{ hit.text }} 
                                 </div>
-                            </li> -->
+                            </li>
                         </ul>
                     </div>
                 </section>
@@ -35,7 +35,7 @@
     export default {
         data: () => ({
             hits: [],
-            isPlayer: ''
+            isPlayer: true
         }),
         props: {
             turnState: String,
@@ -46,7 +46,7 @@
             turnInfo: function() {
                 var vm = this;
 
-            this.hits.unshift({
+            this.hits.push({
                 text: vm.turnInfo
             });
 
@@ -55,8 +55,11 @@
             turnState: function() {
                 var vm = this;
                 if(vm.turnState === 'player') {
-                    vm.isPlayer == true;
-                } else { vm.isPlayer == false; }
+                    vm.isPlayer = true;
+                } 
+                else {
+                     vm.isPlayer = false;
+                 }
             }
         },
 
