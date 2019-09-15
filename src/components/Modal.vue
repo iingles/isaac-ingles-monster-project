@@ -9,7 +9,7 @@
                 <h1>test</h1>
             </v-card-title>
             <v-card-text>
-                Test content
+                {{ modalMessage }}
             </v-card-text>
             <v-card-actions>
                 <div class="flex-grow-1"></div>

@@ -29,7 +29,8 @@
       />
       <Modal 
         :showModal="this.showModal"
-        @modalShown="newGame"
+        :modalMessage="this.modalString"
+        @modalShown="newGame"        
       />
     </v-content>
   </v-app>
@@ -55,7 +56,8 @@
       turnDamage: 0,
       heal: 0,
       logString: '',
-      showModal: false
+      showModal: false,
+      modalString: ''
     }),    
     watch: {
       gameOver: function() {
@@ -107,11 +109,13 @@
 
       },
       playerLost: function() {
+        this.modalString = "You have lost!  New game?"
         this.showModal = true;
         console.log(this.showModal);
         this.gameOver = true;
       },
       playerWon: function() {
+        this.modalString = "You won!  New game?"
         this.showModal = true;
         this.gameOver = true;
       }

@@ -82,12 +82,10 @@
 
                 if(vmh.playerHealth <= 0) {
                     vmh.playerHealth = 0;
-                    console.log('player lost');
                     this.$emit('playerLost');
 
                 } else if(vmh.monsterHealth <= 0) {
                     vmh.monsterHealth = 0;
-                    console.log('player won');
                     this.$emit('playerWon');
                 }
 
