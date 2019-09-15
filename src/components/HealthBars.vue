@@ -23,7 +23,7 @@
                             {{ playerHealth }} / 100
                         </div>
                     </div>
-                    <h1 class="text-center">MAGIC</h1>
+                    <!-- <h1 class="text-center">MAGIC</h1>
                     <div class="healthbar">                        
                         <div
                                 class="magicbar text-center"
@@ -31,7 +31,7 @@
                                 :style="{width: playerMagic + '%'}">
                             {{ playerMagic }} / 100
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </v-flex>
             <div class="flex-grow-1"></div>
@@ -67,13 +67,13 @@
     export default {
         data: () => ({
             playerHealth: 100,
-            playerMagic: 100,
+            //playerMagic: 100,
             monsterHealth: 100
         }),
         props: {
             turnDamage: Number,
             turn: String,
-            heal: Number,
+            heal: Boolean,
             createNewGame: Boolean
         },
         watch: {
@@ -86,26 +86,25 @@
 
                 } else if(vmh.monsterHealth <= 0) {
                     vmh.monsterHealth = 0;
-                    this.$emit('playerWon');
+                    vmh.$emit('playerWon');
                 }
 
                 if(vmh.turnDamage > 0) {
-                    this.charDamage();
+                    vmh.charDamage();
                 }
 
             },
             heal: function() {
                 var vmh = this;
-                if(this.playerMagic < 10) {                    
-                   console.log('out of magic');
-                } else {
-                    if(vmh.playerHealth >=90){
-                        vmh.playerHealth = 100
-                    } else { vmh.playerHealth += vmh.heal; }
 
-                    vmh.playerMagic -= 10;
-                    console.log('heal');
-                    this.$emit('changeTurn');
+                console.log(vmh.heal);
+                if(vmh.heal == true) {
+                    if (this.playerHealth <= 90) {
+                        this.playerHealth += 10;
+                     } else {
+                        this.playerHealth = 100;
+                    }
+                    this.$emit('playerHealed');
                 }
             },
             createNewGame: function() {
@@ -135,13 +134,13 @@
                
                if(vmh.turn === 'player') {
                     vmh.monsterHealth -= vmh.turnDamage;
-                    this.$emit('changeTurn');
+                    this.$emit('changeTurn');              
                 } 
                if(vmh.turn === 'monster') { 
                    vmh.playerHealth -= vmh.turnDamage;
-                   this.$emit('changeTurn');
+                   vmh.$emit('changeTurn');
                 }
-                this.$emit('vmh.playerHealth', 'vmh.monsterHealth');
+                vmh.$emit('vmh.playerHealth', 'vmh.monsterHealth');
             },
         }
     }

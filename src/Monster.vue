@@ -11,6 +11,7 @@
       @playerLost="this.playerLost"
       @playerWon="this.playerWon"
       @changeTurn="turnState"
+      @playerHealed="this.playerHealed"
       />      
       <ControlBar 
       ControlRow
@@ -55,7 +56,7 @@
       gameOver: true,
       turn: '',
       turnDamage: 0,
-      heal: 0,
+      heal: false,
       logString: '',
       showModal: false,
       modalString: '',
@@ -64,8 +65,8 @@
     watch: {
       // gameOver: function() {
       //   if(this.gameOver == true) {
-      //     this.gameOver == false
-      //   } else { this.gameOver == true }
+      //     this.gameOver = false
+      //   } else { this.gameOver = true }
       // },
       // turn: function() {
       //   if(this.gameOver == false) {
@@ -94,7 +95,11 @@
         this.turnDamage = damage;
       },
       playerHeal: function() {
-        this.heal = 10;
+        this.heal = true;
+      },
+      playerHealed: function() {
+        this.heal = false;
+        this.turnState();
       },
       giveUpConfirm: function() {
         this.modalTitle = "Run Away!";
