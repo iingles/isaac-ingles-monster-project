@@ -1,29 +1,19 @@
-# isaac-ingles-monster-project
+isaac-ingles-monster-project
+============================
 
-## Project setup
-```
-npm install
-```
+## Isaac Ingles
+## RIA I
+## Fall 2019
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+---
+**My five changes**
 
-### Compiles and minifies for production
-```
-npm run build
-```
+* Instead of creating seperate 'damage' methods for each button, I created only one damage method that assesses the damage with each turn
 
-### Run your tests
-```
-npm run test
-```
+* I used two arrays instead of one for the log
 
-### Lints and fixes files
-```
-npm run lint
-```
+* I wrapped my project in Vuetify elements
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* I separated my project into several different components
+
+* I used modal windows instead of 'confirm' dialogs
