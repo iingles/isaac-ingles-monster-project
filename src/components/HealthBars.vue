@@ -108,7 +108,6 @@
                 }
             },
             gameOver: function() {
-                console.log('createNewGame');
                 this.playerHealth = 100;
                 this.monsterHealth = 100;
                 this.playerMagic = 100;

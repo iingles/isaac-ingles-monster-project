@@ -24,8 +24,8 @@
        :gameOver="this.gameOver"
        />
       <GameLog LogRow 
-        :turnInfo="this.logString"
-        :turnState="this.turn"
+        :logString="this.logString"
+        :turn="this.turn"
         :clearLog="this.gameOver"
       />
       <Modal 
@@ -63,9 +63,6 @@
       modalString: '',
       modalTitle: ''
     }),    
-    watch: {
- 
-    },
     methods: {
       noNewGame: function() {
         this.gameOver = true;
@@ -109,16 +106,16 @@
           if(vm.heal == true) {
             vm.logString = 'Player heals for 10 HP';
             vm.heal = false;            
-            vm.turn = 'monster'
+            vm.turn = 'monster';
             vm.damageDone();
           } else {
             vm.logString = 'Player hits monster for ' + vm.turnDamage + ' HP';
-            vm.turn = 'monster' 
+            vm.turn = 'monster';
             vm.damageDone(); 
           }                 
         } else {           
           vm.logString = 'Monster hits player for ' + vm.turnDamage + ' HP';
-          vm.turn = 'player' 
+         vm.turn = 'player'; 
         }
         console.log(vm.turn);
       },

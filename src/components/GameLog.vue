@@ -32,27 +32,26 @@
             monsterHits: []
         }),
         props: {
-            turnState: String,
-            turnInfo: String,
+            turn: String,
+            logString: String,
             clearLog: Boolean
         },
         watch: {
-            turnState: function() {
-                console.log('turnState');
-                var vm = this;
-                if(vm.turnState == 'player') {
-                    vm.monsterHits.unshift(vm.turnInfo);
+            turn: function() {
+                var vml = this;
+                if(vml.turn == 'player') {
+                    vml.monsterHits.unshift(vml.turnInfo);
                 } 
-                if(vm.turnState == 'monster') {
-                    vm.playerHits.unshift(vm.turnInfo);
+                if(vml.turn == 'monster') {
+                    vml.playerHits.unshift(vml.turnInfo);
                 }
             },
             clearLog: function() {
-                var vm = this;
+                var vml = this;
 
-                if(vm.clearLog == true) {
-                    vm.playerHits = [];
-                    vm.monsterHits = [];
+                if(vml.clearLog == true) {
+                    vml.playerHits = [];
+                    vml.monsterHits = [];
                 }
             },
             
