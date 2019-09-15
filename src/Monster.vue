@@ -97,6 +97,7 @@
         this.heal = 10;
       },
       giveUpConfirm: function() {
+        this.modalTitle = "Run Away!";
         this.modalString = "Do you really want to give up?"
         this.showModal = true;
         this.gameOver = true;
