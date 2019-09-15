@@ -7,7 +7,7 @@
       :turnDamage="this.turnDamage"
       :heal="this.heal"
       :turn="turn"
-      :createNewGame="gameOver"
+      :gameOver="this.gameOver"
       @playerLost="this.playerLost"
       @playerWon="this.playerWon"
       @changeTurn="turnState"
@@ -32,8 +32,8 @@
         :showModal="this.showModal"
         :modalMessage="this.modalString"
         :modalTitle="this.modalTitle"
-        @modalYes="newGame" 
-        @modalNo="noNewGame"       
+        @modalYes="this.noNewGame" 
+        @modalNo="this.noNewGame"       
       />
     </v-content>
   </v-app>
@@ -68,12 +68,12 @@
     },
     methods: {
       noNewGame: function() {
-    
+        this.gameOver = true;
         this.showModal = false;
       },
-      newGame: function() {
-        this.showModal = false;
-        this.gameOver = false;
+      newGame: function() {  
+        this.gameOver = false;        
+        this.showModal = false;      
         this.turn = 'player';
         this.logString = ''
       },
@@ -105,7 +105,6 @@
       },
       turnState: function() {
         var vm = this;
-        console.log(vm.turn);
         if(vm.turn === 'player') {
           if(vm.heal == true) {
             this.logString = 'Player heals for 10 HP';
