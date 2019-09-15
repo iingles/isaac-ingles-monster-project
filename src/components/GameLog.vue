@@ -4,8 +4,8 @@
             <v-flex xs5>
                 <section class="log" v-if="playerHits.length > 0">
                     <ul>
-                        <li v-for="(pHit, pKey) in playerHits" :Key="pKey">
-                            {{pHit.text}}
+                        <li v-for="(pHit, pKey) in playerHits" :Key="pKey" class="player-turn">
+                            {{ pHit }}
                         </li>
                     </ul>
                 </section>
@@ -15,8 +15,8 @@
             <v-flex xs5>
                 <section class="log" v-if="playerHits.length > 0">
                     <ul>
-                        <li v-for="(mHit, mKey) in monsterHits" :Key="mKey">
-                            {{ mHit.text }}
+                        <li v-for="(mHit, mKey) in monsterHits" :Key="mKey" class="monster-turn">
+                            {{ mHit }}
                         </li>
                     </ul>
                 </section>
@@ -38,26 +38,21 @@
         },
         watch: {
             turnState: function() {
-                console.log(this.turnState);
+                console.log('turnState');
                 var vm = this;
                 if(vm.turnState == 'player') {
-                        vm.monsterHits.unshift({
-                        isPlayer: true,
-                        text: vm.turnInfo
-                    });
+                    vm.monsterHits.unshift(vm.turnInfo);
                 } 
-                else {
-                    vm.playerHits.unshift({
-                        isPlayer: false,
-                        text: vm.turnInfo
-                    });
-                 }
+                if(vm.turnState == 'monster') {
+                    vm.playerHits.unshift(vm.turnInfo);
+                }
             },
             clearLog: function() {
                 var vm = this;
 
                 if(vm.clearLog == true) {
-                    vm.hits = [];
+                    vm.playerHits = [];
+                    vm.monsterHits = [];
                 }
             },
             
@@ -82,22 +77,22 @@
         font-size: 22px;
     }
 
-    .log ul {
+    ul {
         list-style: none;
         font-weight: bold;
         text-transform: uppercase;
     }
 
-    .log ul li {
+    ul li {
         margin: 5px;
     }
 
-    .log ul .player-turn {
+    .player-turn {
         color: blue;
         background-color: #e4e8ff;
     }
 
-    .log ul .monster-turn {
+    .monster-turn {
         color: red;
         background-color: #ffc0c1;
     }

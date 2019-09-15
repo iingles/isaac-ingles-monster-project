@@ -120,7 +120,7 @@
           vm.logString = 'Monster hits player for ' + vm.turnDamage + ' HP';
           vm.turn = 'player' 
         }
-        
+        console.log(vm.turn);
       },
       playerLost: function() {
         this.modalTitle = "A Tragic Defeat!";
