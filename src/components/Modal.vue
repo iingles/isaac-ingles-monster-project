@@ -13,8 +13,8 @@
             </v-card-text>
             <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn color="green darken-1" text @click="modal()">No</v-btn>
-                <v-btn color="green darken-1" text @click="modal()">Yes</v-btn>
+                <v-btn color="green darken-1" text @click="modal('no')">No</v-btn>
+                <v-btn color="green darken-1" text @click="modal('yes')">Yes</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>    
@@ -28,9 +28,16 @@ export default {
         modalTitle: String
     },
     methods: {
-        modal: function() {
+        modal: function(choice) {
+            if(choice == 'no') {
+                this.$emit('modalNo');
+            } 
+            if(choice == 'yes') {
+                this.$emit('modalYes');
+            }
             this.$emit('modalShown')
-        }
+        },
+
     }
 }
 </script>

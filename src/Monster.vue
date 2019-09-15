@@ -32,7 +32,8 @@
         :showModal="this.showModal"
         :modalMessage="this.modalString"
         :modalTitle="this.modalTitle"
-        @modalShown="newGame"        
+        @modalYes="newGame" 
+        @modalNo="noNewGame"       
       />
     </v-content>
   </v-app>
@@ -63,17 +64,13 @@
       modalTitle: ''
     }),    
     watch: {
-      // gameOver: function() {
-      //   if(this.gameOver == true) {
-      //     this.gameOver = false
-      //   } else { this.gameOver = true }
-      // },
-      // turn: function() {
-      //   if(this.gameOver == false) {
-      //   }
-      // }
+ 
     },
     methods: {
+      noNewGame: function() {
+    
+        this.showModal = false;
+      },
       newGame: function() {
         this.showModal = false;
         this.gameOver = false;
@@ -97,8 +94,7 @@
       playerHeal: function() {
         this.heal = true;
       },
-      playerHealed: function() {
-        this.heal = false;
+      playerHealed: function() {        
         this.turnState();
       },
       giveUpConfirm: function() {
@@ -109,27 +105,33 @@
       },
       turnState: function() {
         var vm = this;
+        console.log(vm.turn);
         if(vm.turn === 'player') {
-          vm.logString = 'Player hits monster for ' + vm.turnDamage + ' HP';
-          vm.turn = 'monster' 
-          vm.damageDone();        
+          if(vm.heal == true) {
+            this.logString = 'Player heals for 10 HP';
+            this.heal = false;            
+            vm.turn = 'monster'
+            vm.damageDone();
+          } else {
+            vm.logString = 'Player hits monster for ' + vm.turnDamage + ' HP';
+            vm.turn = 'monster' 
+            vm.damageDone(); 
+          }                 
         } else {           
           vm.logString = 'Monster hits player for ' + vm.turnDamage + ' HP';
           vm.turn = 'player' 
         }
-
+        
       },
       playerLost: function() {
         this.modalTitle = "A Tragic Defeat!";
         this.modalString = "You have lost!  New game?";
         this.showModal = true;
-        this.gameOver = true;
       },
       playerWon: function() {
         this.modalTitle = "A Glorious Victory!";
         this.modalString = "You won!  New game?"
         this.showModal = true;
-        this.gameOver = true;
       }
     }
   };

@@ -40,10 +40,6 @@
             clearLog: Boolean
         },
         watch: {
-            turnInfo: function() {
-                var vm = this;
-
-            },
             turnState: function() {
                 var vm = this;
                 if(vm.turnState === 'player') {

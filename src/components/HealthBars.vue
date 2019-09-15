@@ -75,6 +75,7 @@
             turn: String,
             heal: Boolean,
             createNewGame: Boolean
+            
         },
         watch: {
             turnDamage: function() {
@@ -96,13 +97,13 @@
             },
             heal: function() {
                 var vmh = this;
-
-                console.log(vmh.heal);
                 if(vmh.heal == true) {
                     if (this.playerHealth <= 90) {
                         this.playerHealth += 10;
+                        //this.playerMagic -=10;
                      } else {
                         this.playerHealth = 100;
+                        //this.playerMagic -=10;
                     }
                     this.$emit('playerHealed');
                 }
