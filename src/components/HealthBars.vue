@@ -97,6 +97,7 @@
             },
             heal: function() {
                 var vmh = this;
+                console.log(this.heal);
                 if(vmh.heal == true) {
                     if (this.playerHealth <= 90) {
                         this.playerHealth += 10;

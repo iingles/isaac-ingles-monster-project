@@ -5,7 +5,7 @@
       HealthBars 
       :newGame="this.newGame"
       :turnDamage="this.turnDamage"
-      :heal="heal"
+      :heal="this.heal"
       :turn="turn"
       :createNewGame="gameOver"
       @playerLost="this.playerLost"

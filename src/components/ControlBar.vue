@@ -44,7 +44,6 @@
             },
             giveUp: function() {
                 this.$emit('giveUp');
-                console.log(this.gameOver);
             },
             startGame: function() {
                 this.$emit('startGame');
