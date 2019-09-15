@@ -107,8 +107,8 @@
         var vm = this;
         if(vm.turn === 'player') {
           if(vm.heal == true) {
-            this.logString = 'Player heals for 10 HP';
-            this.heal = false;            
+            vm.logString = 'Player heals for 10 HP';
+            vm.heal = false;            
             vm.turn = 'monster'
             vm.damageDone();
           } else {

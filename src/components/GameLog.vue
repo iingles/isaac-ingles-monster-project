@@ -1,28 +1,24 @@
 <template class="LogRow">
     <v-container>
         <v-layout row>
-            <v-flex sm12>
-                <section class="log" v-if="hits.length > 0">
-                    <div class="small-12 columns">
-                        <ul>
-                            <li v-for="(hit,hitKey) in hits"
-                                
-                                :key="hitKey"
-                            >
-                                {{ hit.text }}
-                            </li>
-                            <!-- <li v-for="(hit,hitKey) in hits" :key="hitKey">
-                                <div v-if="turnState == 'player'" class="player-turn">
-                                    {{ hit.text }} turn: {{ turnState }}
-                                </div>
-                                <div v-else class="monster-turn">
-                                     {{ hit.text }} turn: {{ turnState }}
-                                </div>
-                                    :class="{'player-turn': hit.isPlayer, 'monster-turn': !hit.isPlayer}"
-
-                            </li> -->
-                        </ul>
-                    </div>
+            <v-flex xs5>
+                <section class="log" v-if="playerHits.length > 0">
+                    <ul>
+                        <li v-for="(pHit, pKey) in playerHits" :Key="pKey">
+                            {{pHit.text}}
+                        </li>
+                    </ul>
+                </section>
+            </v-flex>
+            <div class="flex-grow-1"></div>
+            <div class="flex-grow-1"></div>
+            <v-flex xs5>
+                <section class="log" v-if="playerHits.length > 0">
+                    <ul>
+                        <li v-for="(mHit, mKey) in monsterHits" :Key="mKey">
+                            {{ mHit.text }}
+                        </li>
+                    </ul>
                 </section>
             </v-flex>
         </v-layout>
@@ -32,7 +28,8 @@
 <script>
     export default {
         data: () => ({
-            hits: [],
+            playerHits: [],
+            monsterHits: []
         }),
         props: {
             turnState: String,
@@ -41,15 +38,16 @@
         },
         watch: {
             turnState: function() {
+                console.log(this.turnState);
                 var vm = this;
-                if(vm.turnState === 'player') {
-                        vm.hits.unshift({
+                if(vm.turnState == 'player') {
+                        vm.monsterHits.unshift({
                         isPlayer: true,
                         text: vm.turnInfo
                     });
                 } 
                 else {
-                    vm.hits.unshift({
+                    vm.playerHits.unshift({
                         isPlayer: false,
                         text: vm.turnInfo
                     });
