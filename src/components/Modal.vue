@@ -1,6 +1,7 @@
 <template>
     <v-dialog 
     v-model="showModal"
+    persistent
     max-width="600px"
     >
         
