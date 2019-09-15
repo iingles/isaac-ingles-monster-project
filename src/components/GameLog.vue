@@ -5,7 +5,7 @@
                 <section class="log" v-if="playerHits.length > 0">
                     <ul>
                         <li v-for="(pHit, pKey) in playerHits" :Key="pKey" class="player-turn">
-                            {{ pHit }}
+                            {{ pHit.text }}
                         </li>
                     </ul>
                 </section>
@@ -13,10 +13,10 @@
             <div class="flex-grow-1"></div>
             <div class="flex-grow-1"></div>
             <v-flex xs5>
-                <section class="log" v-if="playerHits.length > 0">
+                <section class="log" v-if="monsterHits.length > 0">
                     <ul>
                         <li v-for="(mHit, mKey) in monsterHits" :Key="mKey" class="monster-turn">
-                            {{ mHit }}
+                            {{ mHit.text }}
                         </li>
                     </ul>
                 </section>
@@ -33,18 +33,24 @@
         }),
         props: {
             turn: String,
-            logString: String,
+            playerLogString: String,
+            monsterLogString: String,
             clearLog: Boolean
         },
         watch: {
-            turn: function() {
+            playerLogString: function() {
                 var vml = this;
-                if(vml.turn == 'player') {
-                    vml.monsterHits.unshift(vml.turnInfo);
-                } 
-                if(vml.turn == 'monster') {
-                    vml.playerHits.unshift(vml.turnInfo);
-                }
+
+                vml.playerHits.unshift({
+                    text: vml.playerLogString
+                });
+            },
+            monsterLogString: function() {
+                var vml = this;
+
+                vml.monsterHits.unshift({
+                    text: vml.monsterLogString
+                });
             },
             clearLog: function() {
                 var vml = this;

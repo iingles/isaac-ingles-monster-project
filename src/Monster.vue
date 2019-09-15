@@ -24,7 +24,8 @@
        :gameOver="this.gameOver"
        />
       <GameLog LogRow 
-        :logString="this.logString"
+        :playerLogString="this.playerLogString"
+        :monsterLogString="this.monsterLogString"
         :turn="this.turn"
         :clearLog="this.gameOver"
       />
@@ -58,7 +59,8 @@
       turn: '',
       turnDamage: 0,
       heal: false,
-      logString: '',
+      playerLogString: '',
+      monsterLogString: '',
       showModal: false,
       modalString: '',
       modalTitle: ''
@@ -104,20 +106,19 @@
         var vm = this;
         if(vm.turn === 'player') {
           if(vm.heal == true) {
-            vm.logString = 'Player heals for 10 HP';
+            vm.playerLogString = 'Player heals for 10 HP';
             vm.heal = false;            
             vm.turn = 'monster';
             vm.damageDone();
           } else {
-            vm.logString = 'Player hits monster for ' + vm.turnDamage + ' HP';
+            vm.playerLogString = 'Player hits monster for ' + vm.turnDamage + ' HP';
             vm.turn = 'monster';
             vm.damageDone(); 
           }                 
         } else {           
-          vm.logString = 'Monster hits player for ' + vm.turnDamage + ' HP';
+          vm.monsterLogString = 'Monster hits player for ' + vm.turnDamage + ' HP';
          vm.turn = 'player'; 
         }
-        console.log(vm.turn);
       },
       playerLost: function() {
         this.modalTitle = "A Tragic Defeat!";
