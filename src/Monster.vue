@@ -30,6 +30,7 @@
       <Modal 
         :showModal="this.showModal"
         :modalMessage="this.modalString"
+        :modalTitle="this.modalTitle"
         @modalShown="newGame"        
       />
     </v-content>
@@ -57,23 +58,25 @@
       heal: 0,
       logString: '',
       showModal: false,
-      modalString: ''
+      modalString: '',
+      modalTitle: ''
     }),    
     watch: {
-      gameOver: function() {
-
-      },
-      turn: function() {
-        if(this.gameOver == false) {
-        }
-      }
+      // gameOver: function() {
+      //   if(this.gameOver == true) {
+      //     this.gameOver == false
+      //   } else { this.gameOver == true }
+      // },
+      // turn: function() {
+      //   if(this.gameOver == false) {
+      //   }
+      // }
     },
     methods: {
       newGame: function() {
         this.showModal = false;
         this.gameOver = false;
         this.turn = 'player';
-
         this.logString = ''
       },
       damageDone: function(modifier) {
@@ -94,6 +97,8 @@
         this.heal = 10;
       },
       giveUpConfirm: function() {
+        this.modalString = "Do you really want to give up?"
+        this.showModal = true;
         this.gameOver = true;
       },
       turnState: function() {
@@ -109,12 +114,13 @@
 
       },
       playerLost: function() {
-        this.modalString = "You have lost!  New game?"
+        this.modalTitle = "A Tragic Defeat!";
+        this.modalString = "You have lost!  New game?";
         this.showModal = true;
-        console.log(this.showModal);
         this.gameOver = true;
       },
       playerWon: function() {
+        this.modalTitle = "A Glorious Victory!";
         this.modalString = "You won!  New game?"
         this.showModal = true;
         this.gameOver = true;
